@@ -107,7 +107,8 @@ EOF
 
   # 签发证书
   "${HOME}/.acme.sh/acme.sh" --issue $(printf -- " -d %s" "${domains[@]}") \
-    --webroot "${acme_webroot_path}" \
+    --dns dns_cf \
+    --dnssleep 30 \
     --keylength ec-256 \
     --accountkeylength ec-256 \
     --server zerossl \
@@ -116,7 +117,8 @@ EOF
   if [[ $? -ne 0 ]]; then
     print_warn "首次签发失败，尝试启用调试模式重新签发..."
     "${HOME}/.acme.sh/acme.sh" --issue $(printf -- " -d %s" "${domains[@]}") \
-      --webroot "${acme_webroot_path}" \
+      --dns dns_cf \
+      --dnssleep 30 \
       --keylength ec-256 \
       --accountkeylength ec-256 \
       --server zerossl \
